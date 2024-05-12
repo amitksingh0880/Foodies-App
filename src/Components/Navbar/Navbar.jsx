@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { Badge } from "@chakra-ui/react";
 
 const Navbar = () => {
   const { auth } = useSelector((state) => state.userReducer);
@@ -47,7 +48,10 @@ const Navbar = () => {
                 SignUp
               </Link>
               <Link style={{display:auth ? "block" : "none"}} className="btn bg-white text-success mx-1" to="/">
-                My Cart
+                My Cart {" "}
+                <Badge className="mb-3 bg-danger fw-bolder rounded-5 " bg={"greenyellow"} >
+                   2
+                </Badge>
               </Link>
               <Link style={{display:auth ? "block" : "none"}} className="btn bg-white text-success mx-1" to="/logout">
                 Logout

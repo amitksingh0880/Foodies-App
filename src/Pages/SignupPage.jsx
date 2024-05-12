@@ -14,7 +14,7 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom"; // Add this line
 import axios from "axios";
 import { BASE_URL } from "../Constants/config";
 
@@ -27,22 +27,26 @@ const SignupPage = () => {
   const [location, setLocation] = useState("");
 
 
-  const handleSignUp = async() => {
-    // dispatch(getUser(name,email, password));
-    let data = await axios.post(BASE_URL+"/user/register",{
-          name, email , password, location
-    })
-
-    let {message , status} = data.data
-    if(status==1)
-    {
-        alert(message)
-        nav("/login")
-
-    }else{
+  const handleSignUp = async () => {
+    try {
+      let data = await axios.post(BASE_URL + "/user/register", {
+        name,
+        email,
+        password,
+        location,
+      });
+      let { message, status } = data.data;
+      if (status === 1) {
         alert(message);
+        nav("/login");
+      } else {
+        alert(message);
+      }
+    } catch (error) {
+      console.error("Axios Error:", error);
     }
   };
+  
 
   // if (loading) return <h1 style={{ marginTop: "80px" }}>loading...</h1>
   // if (error) return <h1 style={{ marginTop: "80px" }}>Error</h1>
