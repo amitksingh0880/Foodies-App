@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Badge } from "@chakra-ui/react";
 import ModalCart from "../Modal/ModalCart";
 import Cart from "../../Pages/Cart";
 import { useCart } from "../ContextReducer";
+import { LOGOUT } from "../../Users/User.type";
 
 const Navbar = () => {
+  const dispatch = useDispatch()
   const { auth } = useSelector((state) => state.userReducer);
    const [cartView , setcartView] = useState(false);
    const data = useCart()
@@ -59,8 +61,8 @@ const Navbar = () => {
                 </Badge>
               </Link>
               {cartView ? <ModalCart onClose={()=> setcartView(false)}> <Cart/> </ModalCart> : null }
-              <Link style={{display:auth ? "block" : "none"}} className="btn bg-white text-success mx-1" to="/logout">
-                Logout
+              <Link style={{display:auth ? "block" : "none"}} className="btn bg-white text-success mx-1" onClick={()=>{ dispatch({type: LOGOUT})}} to="/">
+                  LogOut
               </Link>
             </div>
           </div>
