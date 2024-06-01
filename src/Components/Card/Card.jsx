@@ -1,7 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useCart, useDispatchCart } from "../ContextReducer";
+import LoginPage from "../../Pages/LoginPage";
+import { useSelector } from "react-redux";
 
 const Card = (props) => {
+  const { auth } = useSelector((state) => state.userReducer);
   let dispatch = useDispatchCart();
   let options = props.options; 
   const priceRef = useRef()
@@ -47,7 +50,7 @@ const Card = (props) => {
   useEffect(()=>{
        setSize(priceRef.current.value)
   },[])
-
+  localStorage.setItem("img",props.foodItem.img);
   return (
     <div>
       <div
@@ -83,7 +86,7 @@ const Card = (props) => {
             </div>
           </div>
           <hr />
-          <button className="btn btn-success justify-content-center  ms-2" onClick={handleAddToCart}>Add to Cart</button>
+          <button className="btn btn-success justify-content-center  ms-2" onClick={ auth ? handleAddToCart : <LoginPage/>}>Add to Cart</button>
         </div>
       </div>
     </div>

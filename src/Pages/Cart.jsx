@@ -5,6 +5,7 @@ import { BASE_URL } from '../Constants/config'
 
 const Cart = () => {
   let data = useCart()
+   console.log("Data:"+data);
   let dispatch = useDispatchCart();
   if(data.length === 0){
     return(
@@ -13,17 +14,19 @@ const Cart = () => {
   }
   const handleCheckOut = async()=>{
     let userEmail = localStorage.getItem("userEmail")
+    let img = localStorage.getItem("img")
     let response = await fetch("http://localhost:4000/orders/orderData",{
       method: "POST",
       headers : {
          'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-          order_data: data,
+          order_data: data, img,
           email: userEmail,
           order_date: new Date().toDateString()
-      })
+      }),
     })
+    console.log(order_data);
     console.log("Order Response", response);
     if(response.status === 200)
       {

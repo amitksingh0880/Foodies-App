@@ -10,29 +10,39 @@ const reducer = (state, action) => {
                 ...state,
                 {
                     id: action.id,
+                    // img: action.img,
                     name: action.name,
                     qty: action.qty,
                     size: action.size,
                     price: action.price,
-                    img: action.img,
                 },
             ];
-         case "REMOVE" :
-             let newArr = [...state]
-             newArr.splice(action.index , 1)
-             return newArr;
+        //  case "REMOVE" :
+        //      let newArr = [...state]
+        //      newArr.splice(action.index , 1)
+        //      return newArr;
+         case "REMOVE":
+         // Use filter to remove the item at the specified index
+            return state.filter((_, index) => index !== action.index);
         case "UPDATE":
-            let arr = [...state]
-             arr.find((food , index)=>{
-                if(food.id === action.id)
-                    {
-                        console.log(food.qty , parseInt(action.qty), action.price + food.price);
-                        arr[index] = {...food , qty: parseInt(action.qty) + food.qty , price: action.price + food.price };
-                    }
-                    return arr
-              })
-             return arr
+            // let arr = [...state]
+            //  arr.find((food , index)=>{
+            //     if(food.id === action.id)
+            //         {
+            //             console.log(food.qty , parseInt(action.qty), action.price + food.price);
+            //             arr[index] = {...food , qty: parseInt(action.qty) + food.qty , price: action.price + food.price };
+            //         }
+            //         return arr
+            //   })
+            //  return arr
+              // Use map to update the item with the specified id
+            return state.map((item) =>
+                item.id === action.id
+                    ? { ...item, qty: parseInt(action.qty) + item.qty, price: action.price + item.price }
+                    : item
+            );
              case "DROP":
+                //Return an Empty array to drop
                let empArray = []
                return empArray
             default:
