@@ -22,10 +22,11 @@ const LoginPage = () => {
 
       const {auth , token, loading , error} = useSelector((state) =>state.userReducer);
         console.log(auth, token);
-         const [email, setEmail] = useState("")
+        const [email, setEmail] = useState("")
         const [password, setPassword] = useState("")
         const dispatch = useDispatch()
         const nav = useNavigate()
+        localStorage.setItem("userEmail", email);
         useEffect(() => {
             if (auth) {
                 nav("/");

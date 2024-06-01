@@ -4,6 +4,8 @@ import LoginPage from "../Pages/LoginPage";
 import HomePage from "../Pages/HomePage";
 import SignupPage from "../Pages/SignupPage";
 import { CartProvider } from "../Components/ContextReducer";
+import Cart from "../Pages/Cart";
+import MyOrder from "../Pages/MyOrder";
 
 const AllRoutes = () => {
   return (
@@ -12,6 +14,7 @@ const AllRoutes = () => {
         <Route path="/" element={<HomePage />} />
         <Route path="/register" element={<SignupPage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/myOrders" element={<MyOrder/>} />
       </Routes>
     </CartProvider>
   );

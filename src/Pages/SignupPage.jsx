@@ -14,7 +14,7 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom"; // Add this line
+import { useNavigate } from "react-router-dom"; 
 import axios from "axios";
 import { BASE_URL } from "../Constants/config";
 
@@ -46,10 +46,6 @@ const SignupPage = () => {
       console.error("Axios Error:", error);
     }
   };
-  
-
-  // if (loading) return <h1 style={{ marginTop: "80px" }}>loading...</h1>
-  // if (error) return <h1 style={{ marginTop: "80px" }}>Error</h1>
   return (
     <Flex w={"100%"}>
       <Image
