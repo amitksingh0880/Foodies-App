@@ -13,14 +13,6 @@ const Card = (props) => {
   const [qty, setQty] = useState(1);
   const [size, setSize] = useState('');
 
-  const handleButtonClick = () => {
-    if (auth) {
-      handleAddToCart();
-    } else {
-      window.location.href = "/login";
-    }
-  };
-
   const handleAddToCart = async () => {
     let food = [];
     for (const item of data) {
@@ -60,6 +52,13 @@ const Card = (props) => {
     }
   };
 
+  const handleButtonClick = () => {
+    if (auth) {
+      handleAddToCart();
+    } else {
+      window.location.href = "/login";
+    }
+  };
   let finalPrice = qty * parseInt(options[size]);
   useEffect(()=>{
        setSize(priceRef.current.value)
@@ -100,7 +99,7 @@ const Card = (props) => {
             </div>
           </div>
           <hr />
-          <button className="btn btn-success justify-content-center  ms-2" onClick={handleButtonClick()}>Add to Cart</button>
+          <button className="btn btn-success justify-content-center  ms-2" onClick={ auth ? handleAddToCart : <LoginPage/>}>Add to Cart</button>
         </div>
       </div>
     </div>
