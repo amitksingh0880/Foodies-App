@@ -16,7 +16,7 @@ import {
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom"; 
 import axios from "axios";
-import { BASE_URL } from "../Constants/config";
+import { BACKEND_URL } from "../Constants/config";
 
 const SignupPage = () => {
   const nav = useNavigate();
@@ -29,7 +29,7 @@ const SignupPage = () => {
 
   const handleSignUp = async () => {
     try {
-      let data = await axios.post(BASE_URL + "/user/register", {
+      let data = await axios.post(BACKEND_URL+ "/user/register", {
         name,
         email,
         password,

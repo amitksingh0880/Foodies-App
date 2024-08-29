@@ -1,7 +1,7 @@
 import React from 'react'
 import { useCart, useDispatchCart } from '../Components/ContextReducer'
 import trash from "../Assests/trash.png"
-import { BASE_URL } from '../Constants/config'
+import { BACKEND_URL } from "../Constants/config"
 
 const Cart = () => {
   let data = useCart()
@@ -12,27 +12,37 @@ const Cart = () => {
         <div className='m-5 text-center text-danger fs-3'>Cart is Empty!...</div>
     )
   }
-  const handleCheckOut = async()=>{
-    let userEmail = localStorage.getItem("userEmail")
-    let img = localStorage.getItem("img")
-    let response = await fetch("http://localhost:4000/orders/orderData",{
-      method: "POST",
-      headers : {
-         'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
+  const handleCheckOut = async () => {
+    try {
+      let userEmail = localStorage.getItem("userEmail")
+      let img = localStorage.getItem("img")
+      let response = await fetch(BACKEND_URL + "/orders/orderData", {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
           order_data: data, img,
           email: userEmail,
           order_date: new Date().toDateString()
-      }),
-    })
-    console.log(order_data);
-    console.log("Order Response", response);
-    if(response.status === 200)
-      {
-        dispatch({type: "DROP"})
+        }),
+      });
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
+  
+      const responseData = await response.json(); // Parse the JSON from the response
+      console.log("Order Response Data", responseData);
+  
+      if (response.status === 200) {
+        dispatch({ type: "DROP" });
+      }
+    } catch (error) {
+      console.error("Failed to complete the order:", error);
+    }
   }
+  
   let totalPrice = data.reduce((total, food)=> total+ food.price, 0)
   return (
   <div className='container m-auto mt-5 table-responsive table-responsive-sm table-responsive-md '>

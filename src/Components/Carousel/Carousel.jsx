@@ -1,54 +1,44 @@
 import React from "react";
 
-const Carousel = () => {
+const Carousel = ({ imageUrls, search, setSearch }) => {
   return (
-    <div id="carouselExampleFade" className="carousel slide carousel-fade" style={{objectFit:"contain !important"}}>
-      <div className="carousel-inner" style={{maxHeight:"500px"}}>
-        <div className="carousel-caption" style={{zIndex:"10"}}>
-          <form class="d-flex" role="search">
+    <div
+      id="carouselExampleFade"
+      className="carousel slide carousel-fade"
+      data-bs-ride="carousel"
+      data-bs-interval="2000"
+      style={{ objectFit: "contain !important" }}
+    >
+      <div className="carousel-inner" style={{ maxHeight: "500px" }}>
+        <div className="carousel-caption" style={{ zIndex: "10" }}>
+          <form className="d-flex" role="search" onSubmit={(e) => e.preventDefault()}>
             <input
-              class="form-control me-2"
+              className="form-control me-2"
               type="search"
               placeholder="Search"
               aria-label="Search"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
             />
-            <button class="btn btn-success" type="submit">
+            <button className="btn btn-success" type="submit">
               Search
             </button>
           </form>
         </div>
-        <div className="carousel-item active">
-          <img
-            src="https://source.unsplash.com/random/900×700/?burger"
-            className="w-100"
-            style={{maxHeight:"500px",
-                    objectFit:"contain",
-                    maxWidth:"100%"
-          }}
-
-            alt="..."
-          />
-        </div>
-        <div className="carousel-item">
-          <img
-            src="https://source.unsplash.com/random/900×700/?momos"
-            className="w-100"
-            style={{maxHeight:"500px",
-            objectFit:"contain",
-            maxWidth:"100%"}}
-            alt="..."
-          />
-        </div>
-        <div className="carousel-item">
-          <img
-            src="https://source.unsplash.com/random/900×700/?ramen"
-            className="w-100"
-            style={{maxHeight:"500px",
-            objectFit:"contain",
-            maxWidth:"100%"}}
-            alt="..."
-          />
-        </div>
+        {imageUrls.map((url, index) => (
+          <div key={index} className={`carousel-item ${index === 0 ? 'active' : ''}`}>
+            <img
+              src={url}
+              className="w-100 blue-tint"
+              style={{
+                maxHeight: "500px",
+                objectFit: "contain",
+                maxWidth: "100%",
+              }}
+              alt={`Slide ${index}`}
+            />
+          </div>
+        ))}
       </div>
       <button
         className="carousel-control-prev"

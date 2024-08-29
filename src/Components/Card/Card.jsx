@@ -6,45 +6,58 @@ import { useSelector } from "react-redux";
 const Card = (props) => {
   const { auth } = useSelector((state) => state.userReducer);
   let dispatch = useDispatchCart();
-  let options = props.options; 
-  const priceRef = useRef()
-  console.log(options);
+  let options = props.options;
+  const priceRef = useRef();
   let data = useCart();
   let priceOptions = Object.keys(options);
-  console.log("Price options:", priceOptions);
   const [qty, setQty] = useState(1);
   const [size, setSize] = useState('');
 
   const handleAddToCart = async () => {
-    let food = []
-    for(const item of data) {
-        if(item.id === props.foodItem._id)
-          {
-            food = item;
-            break;
-          }
-    }
-    if( food != [])
-      {
-          if(food.size === size)
-            {
-              await dispatch({type: "UPDATE" , id: props.foodItem._id , price: finalPrice , qty : qty})
-              return
-            }
-            else if(food.size != size)
-              {
-                 await dispatch({type: "ADD", id: props.foodItem._id , name: props.foodItem.name , price: finalPrice , qty: qty , size: size})
-              }
+    let food = [];
+    for (const item of data) {
+      if (item.id === props.foodItem._id) {
+        food = item;
+        break;
       }
-    // await dispatch({
-    //   type: "ADD",
-    //   id: props.foodItem._id,
-    //   name: props.foodItem.name,
-    //   price: finalPrice,
-    //   qty: qty,
-    //   size: size,
-    // });
-    // console.log(data);
+    }
+    if (food.length !== 0) {
+      if (food.size === size) {
+        await dispatch({
+          type: "UPDATE",
+          id: props.foodItem._id,
+          price: finalPrice,
+          qty: qty
+        });
+        return;
+      } else {
+        await dispatch({
+          type: "ADD",
+          id: props.foodItem._id,
+          name: props.foodItem.name,
+          price: finalPrice,
+          qty: qty,
+          size: size
+        });
+      }
+    } else {
+      await dispatch({
+        type: "ADD",
+        id: props.foodItem._id,
+        name: props.foodItem.name,
+        price: finalPrice,
+        qty: qty,
+        size: size
+      });
+    }
+  };
+
+  const handleButtonClick = () => {
+    if (auth) {
+      handleAddToCart();
+    } else {
+      window.location.href = "/login"; // or navigate to login page
+    }
   };
   let finalPrice = qty * parseInt(options[size]);
   useEffect(()=>{

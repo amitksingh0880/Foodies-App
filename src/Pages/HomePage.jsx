@@ -5,6 +5,7 @@ import Footer from "../Components/Footer/Footer";
 import Carousel from "../Components/Carousel/Carousel";
 import axios from "axios";
 import { filter } from "@chakra-ui/react";
+import { BACKEND_URL } from "../Constants/config";
 
 const HomePage = () => {
   const [foodCat, setFoodCat] = useState([]);
@@ -14,7 +15,7 @@ const HomePage = () => {
   const loadData = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:4000/display/foodData",
+        BACKEND_URL+"/display/foodData",
         {
           headers: {
             "Content-Type": "application/json",
@@ -30,7 +31,7 @@ const HomePage = () => {
       console.error("Error loading data:", error);
     }
   };
-
+  const imageUrls = foodItem.flatMap(item => item.img ? [item.img] : []);
   useEffect(() => {
     loadData();
   }, []);
@@ -38,7 +39,7 @@ const HomePage = () => {
   return (
     <div className="bg-success">
       <Navbar />
-      <Carousel search={search} setSearch={setSearch} />
+      <Carousel search={search} setSearch={setSearch} imageUrls={imageUrls} />
       <div className="container">
         {foodCat && foodCat.length > 0 ? (
           foodCat.map((category) => (
